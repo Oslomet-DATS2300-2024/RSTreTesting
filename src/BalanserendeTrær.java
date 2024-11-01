@@ -82,14 +82,6 @@ public class BalanserendeTrær{
     }
 }
 
-class Stabel<T> {
-    // En wrapper-klasse for ArrayDeque til stabelbruk, så jeg slipper huske om jeg skal bruke addFirst eller addLast osv
-    Deque<T> stabel = new ArrayDeque<>();
-
-    public void push(T verdi) {stabel.addFirst(verdi);}
-    public T pop() {return stabel.removeFirst();}
-}
-
 abstract class RSTre<T> { // Abstrakt klasse som implementerer alt som er felles for de forskjellige trærne
     static final boolean RØD = true; // Kunne brukt enum, men siden vi kun har to verdier, er dette enklere.
     static final boolean SORT = false;
@@ -187,7 +179,7 @@ class RSTreNedenfraOpp<T> extends RSTre<T> {
         // Går gjennom treet og finner riktig plassering for den nye noden
         // Lagrer nodene i en stabel, så vi kan gå baklengs når vi rydder opp
         Node<T> p = rot;
-        Stabel<Node<T>> stabel = new Stabel<>();
+        Deque<Node<T>> stabel = new ArrayDeque<>();
         int cmp = 0;
         while (p != null) {
             stabel.push(p);
@@ -319,7 +311,7 @@ class VLRSTreNedenfraOpp<T> extends RSTre<T> {
         // Går gjennom treet og finner riktig plassering for den nye noden
         // Lagrer nodene i en stabel, så vi kan gå baklengs når vi rydder opp
         Node<T> p = rot;
-        Stabel<Node<T>> stabel = new Stabel<>();
+        Deque<Node<T>> stabel = new ArrayDeque<>();
         int cmp = 0;
         while (p != null) {
             stabel.push(p);
@@ -458,7 +450,7 @@ class VLRSTreOvenfraNed<T> extends RSTre<T> {
 
     @Override
     public boolean leggInnIterativ(T verdi) {
-        throw new UnsupportedOperationException("Jeg har ikke giddi lage iterativ variant av denne.");
+        throw new UnsupportedOperationException("Ikke giddi implementere dette.");
     }
 
     @Override
@@ -579,7 +571,7 @@ class RSBinTre<T>
         }
 
         // bruke en stakk for å kunne gå oppover etterpå
-        Stabel<Node<T>> stabel = new Stabel<>();
+        Deque<Node<T>> stabel = new ArrayDeque<>();
 
         Node<T> p = rot;   // hjelpevariabel
         int cmp = 0;       // hjelpevariabel
